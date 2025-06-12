@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addCartSaree } from "../utils/constants/cartSlice";
+import { setShowPopup } from "../utils/constants/appSlice";
 
 const Sareecard = ({ sareeInfo }) => {
   const dispatch = useDispatch();
@@ -14,6 +15,10 @@ const Sareecard = ({ sareeInfo }) => {
   // console.log(sareeInfo);
 
   const handleCartBtn = () => {
+    dispatch(setShowPopup(true));
+    setTimeout(() => {
+      dispatch(setShowPopup(false));
+    }, 2000);
     dispatch(addCartSaree(sareeInfo));
   }
 

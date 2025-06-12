@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeItem } from "../utils/constants/cartSlice";
 
 const CartCard = ({ sareeInfo }) => {
   const dispatch = useDispatch();
-  console.log(sareeInfo);
+  const [isRemoving, setIsRemoving] = useState(false);
+  // console.log(sareeInfo);
 
   const { image, name, design, fabric, color, price } = sareeInfo;
 
   const handleRemoveBtn = () => {
-    dispatch(removeItem(sareeInfo.id));
-  }
+    setIsRemoving(true);
+    setTimeout(() => {
+      dispatch(removeItem(sareeInfo.id));
+    }, 500);
+  };
 
   return (
     <>
-      <div className="bg-[#38858c] w-[56%] mb-4 rounded-xl flex">
+      <div
+        className={`bg-[#38858c] w-[56%] mb-4 rounded-xl flex ${
+          isRemoving ? "animate-fade-out" : ""
+        }`}
+      >
         <div className="w-72 h-56">
           <img
             className="h-full w-full object-cover rounded-l-xl"
@@ -31,8 +39,13 @@ const CartCard = ({ sareeInfo }) => {
             <li>₹ {price}</li>
           </ul>
         </div>
-        <div className="text-end border-2 border-[#9ACBD0] transition-all duration-300 hover:bg-[#9ACBD0] absolute left-[71.80vw] px-2 py-1 text-lg rounded-xl">
-          <button onClick={()=>handleRemoveBtn()}>Remove</button>
+        <div className="ml-auto self-center mr-4">
+          <button
+            onClick={handleRemoveBtn}
+            className="border-2 border-[#9ACBD0] px-4 py-1 rounded-xl text-lg text-white hover:bg-[#9ACBD0] transition-all duration-300"
+          >
+            Remove
+          </button>
         </div>
       </div>
     </>

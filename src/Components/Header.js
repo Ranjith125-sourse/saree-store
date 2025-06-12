@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 const Header = () => {
+  const showPopup = useSelector((store) => store?.app?.showPopup);
+  console.log(showPopup);
   const navigate = useNavigate();
   const cartItems = useSelector((store) => store?.cart?.cartItems || []);
   const cartCount = cartItems?.length;
-  const [isAdmin, setAdmin] = useState(localStorage.getItem("isAdmin") === "true");
-
+  const [isAdmin, setAdmin] = useState(
+    localStorage.getItem("isAdmin") === "true"
+  );
 
   const handleLogout = () => {
     localStorage.removeItem("isAdmin");
@@ -31,6 +34,11 @@ const Header = () => {
           />
         </Link>
       </div>
+      { showPopup &&
+        <div className="w-80 h-10 bg-white mt-10 pt-2 rounded-xl bg-opacity-40 fixed mx-[40%] animate-fade-in">
+          {cartCount + " items added to your cart"}
+        </div>
+      }
       <div className="mr-5 mt-12">
         <Link to={"/cart"}>
           <button className="mr-2 border-2 px-5 py-1 text-xl bg-gradient-to-tl transition-all duration-300 from-blue-950 to-blue-700 text-white border-amber-600 shadow-md hover:shadow-white rounded-xl focus:ring-4 focus:ring-amber-500 focus:ring-opacity-50">
